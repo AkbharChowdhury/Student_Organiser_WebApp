@@ -4,7 +4,7 @@ declare(strict_types=1);
 session_start();
 define('LOGO', 'fas fa-book-reader');
 define('CURRENT_FILE', htmlspecialchars($_SERVER['PHP_SELF']));
-define('LOGO_TEXT', 'Student Planner');
+define('LOGO_TEXT', 'Mellodian Community Park');
 define('PAGES', ['index', 'login', 'register']);
 define('USER', ['profile', 'coursework', 'teachers', 'modulesAndTeacher', 'campus', 'calendar', 'dashboard']);
 define('ADMIN', ['admin_dashboard']);
@@ -63,7 +63,7 @@ if (in_array($current_page, USER) && Helper::adminIsLoggedIn()) {
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <!-- Bootstrap CSS -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
   <!-- flat-picker CSS -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 
@@ -95,7 +95,7 @@ if (in_array($current_page, USER) && Helper::adminIsLoggedIn()) {
 </head>
 
 <body data-spy="scroll" data-offset="15" data-target="#navbarSupportedContent">
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
+  <nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top">
 
 
     <div class="container-fluid">
@@ -160,7 +160,7 @@ if (in_array($current_page, USER) && Helper::adminIsLoggedIn()) {
             <li class="nav-item">
               <a class="nav-link <?= Helper::activeLink('login') ?>" <?= Helper::ariaCurrent('login') ?> href="login.php">Login</a>
             </li>
-            <button class="btn btn-warning" type="button" onclick="window.location.href='register.php'">Register</button>
+            <button class="btn btn-success" type="button" onclick="window.location.href='register.php'">Register</button>
         </ul>
       <?php else : ?>
 
@@ -170,7 +170,7 @@ if (in_array($current_page, USER) && Helper::adminIsLoggedIn()) {
             Profile
           </a>
 
-          <ul class="dropdown-menu dropdown-menu-dark dropdown-menu-end" aria-labelledby="navbarDropdown">
+          <ul class="dropdown-menu dropdown-menu-darj dropdown-menu-end" aria-labelledby="navbarDropdown">
             <?php if (Helper::studentIsLoggedIn()) :  // show profile link page for student?>
               <li>
                 <a class="dropdown-item <?= Helper::activeLink('profile') ?>" href="<?= FILE_PATH['profile'] ?>">My profile</a>

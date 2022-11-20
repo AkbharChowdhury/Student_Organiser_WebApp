@@ -1,46 +1,14 @@
 <!--footer-->
-<footer class="bg-dark text-white mt-3">
-	<div class="container-fluid padding">
-		<div class="row text-center">
-			<div class="col-md-4 mt-2">
-				<a class="navbar-brand" href="<?=Helper::getHomeLink()?>">
-					<img src="<?= FILE_PATH['logo'] ?>" alt="Logo" class="d-inline-block align-text-top" width="30" height="30"> <?= LOGO_TEXT ?>
-				</a>
-				<hr class="bg-light mt-4">
 
-			</div>
-
-			<div class="col-md-4">
-				<hr class="bg-light">
-				<h5>Useful links</h5>
-				<hr class="bg-light">
-				<?php if (Helper::studentIsLoggedIn()) : ?>
-
-					<p><a href="<?= FILE_PATH['dashboard'] ?>">Dashboard</a></p>
-					<p><a href="<?= FILE_PATH['calendar'] ?>">Calendar</a></p>
-					<p><a href="<?= FILE_PATH['coursework'] ?>">Coursework</a></p>
-					<p><a href="<?= FILE_PATH['modulesAndTeachers'] ?>">Modules & Teachers</a></p>
-				<?php elseif ((Helper::adminIsLoggedIn())) : ?>
-					<p><a href="<?= FILE_PATH['admin_dashboard'] ?>">Dashboard</a></p>
-
-				<?php else : ?>
-					<p><a href="index.php">Home</a></p>
-					<p><a href="login.php">Login</a></p>
-					<p><a href="register.php">Register</a></p>
-					<p><a href="terms_and_conditions.php">Terms & conditions and privacy policy</a></p>
-				<?php endif; ?>
-			</div>
-		</div>
-		<div class="col-12 text-center">
-			<hr>
-			
-			<h5 id="copyrightInfo">&copy; <?= LOGO_TEXT ?> 2021 – <?= date("Y") ?></h5>
-		</div>
-	</div>
+<footer class="footer mt-auto py-3 bg-light shadow-sm">
+    <div class="container">
+        <span class="text-muted"><?=LOGO_TEXT?> 2022</span>
+    </div>
 </footer>
 
+
 <!-- Bootstrap 5 Bundle with Popper -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
 <!-- JQuery required for AJAX to work -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <!-- JQuery UI -->
