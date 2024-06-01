@@ -1,8 +1,8 @@
 <!--footer-->
 
-<footer class="footer mt-auto py-3 bg-light shadow-sm">
+<footer class="footer mt-auto py-3 bg-dark shadow-sm">
     <div class="container">
-        <span class="text-muted"><?=LOGO_TEXT?> 2022</span>
+        <span class="text-white"><?=LOGO_TEXT?> 2022</span>
     </div>
 </footer>
 

@@ -4,6 +4,9 @@
  * @author Akbhar Chowdhury
  * @description Akbhar Chowdhury StudentPlanner website
  */
+
+use Dotenv\Dotenv as Dotenv;
+
 final class Database {
 
     private $con;
@@ -216,21 +219,51 @@ final class Database {
         return $stmt->fetchAll();
     }
 
+//    private function getConnection() {
+//        try {
+//            $config = [
+//                'host' => 'localhost',
+//                'username' => 'root',
+//                'password' => '',
+//                'databaseName' => 'AC_StudentOrganiser',
+//                'charset' => 'charset=utf8'
+//            ];
+//            $dsn = 'mysql:host=' . $config['host'] . ';dbname=' . $config['databaseName'] . ';' . $config['charset'];
+//            $this->con = new PDO($dsn, $config['username'], $config['password']);
+//            $this->con->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+//            return $this->con;
+//        } catch (PDOException $e) {
+//
+//            echo $this->showErrorMessage('There was an error connecting to the database <br> ' . $e->getMessage());
+//        }
+//    }
+
+
+
+    private function loadENV(){
+        $rootDir = Helper::rootDirectory(__FILE__);
+        require_once $rootDir .'/vendor/autoload.php';
+        $dotenv = Dotenv::createImmutable($rootDir);
+        $dotenv->load();
+    }
+
     private function getConnection() {
         try {
+            $this->loadENV();
+
             $config = [
-                'host' => 'localhost',
-                'username' => 'root',
-                'password' => '',
-                'databaseName' => 'AC_StudentOrganiser',
-                'charset' => 'charset=utf8'
+                'host' => $_ENV['HOST'] ?? 'no host',
+                'username' => $_ENV['USERNAME'] ?? 'no username',
+                'password' => $_ENV['PASSWORD'] ?? 'no password',
+                'databaseName' => $_ENV['DB_NAME'] ?? 'no db name',
+                'charset' => $_ENV['CHARSET'] ?? 'no charset'
             ];
             $dsn = 'mysql:host=' . $config['host'] . ';dbname=' . $config['databaseName'] . ';' . $config['charset'];
             $this->con = new PDO($dsn, $config['username'], $config['password']);
             $this->con->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
             return $this->con;
         } catch (PDOException $e) {
-            
+
             echo $this->showErrorMessage('There was an error connecting to the database <br> ' . $e->getMessage());
         }
     }

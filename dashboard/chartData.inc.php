@@ -6,14 +6,12 @@ $db = Database::getInstance();
 
 // checklist pie chart
 if (isset($_POST["action"]) &&  $_POST["action"] === 'getCWChecklist') {
-	$pie_chart_data = [];
-	foreach ($db->countCheckListItemsByCWPie($_POST['coursework_id']) as $row) {
-		$pie_chart_data[] = [
-			'status_level' => $row["status_level"],
-			'status_total' => $row["status_total"],
-			'color' => $row["status_colour"] === '#6c757d' ? '#FF0000' : $row["status_colour"]
+    $data = $db->countCheckListItemsByCWPie($_POST['coursework_id'])[0];
+		$pie_chart_data = [
+			'status_level' => $data["status_level"],
+			'status_total' => $data["status_total"],
+			'color' => $data["status_colour"] === '#6c757d' ? '#FF0000' : $data["status_colour"]
 		];
-	}
 	echo json_encode($pie_chart_data);
 }
 

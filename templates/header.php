@@ -4,7 +4,7 @@ declare(strict_types=1);
 session_start();
 define('LOGO', 'fas fa-book-reader');
 define('CURRENT_FILE', htmlspecialchars($_SERVER['PHP_SELF']));
-define('LOGO_TEXT', 'Mellodian Community Park');
+define('LOGO_TEXT', 'StudentPlanner');
 define('PAGES', ['index', 'login', 'register']);
 define('USER', ['profile', 'coursework', 'teachers', 'modulesAndTeacher', 'campus', 'calendar', 'dashboard']);
 define('ADMIN', ['admin_dashboard']);
@@ -95,7 +95,7 @@ if (in_array($current_page, USER) && Helper::adminIsLoggedIn()) {
 </head>
 
 <body data-spy="scroll" data-offset="15" data-target="#navbarSupportedContent">
-  <nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top">
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
 
 
     <div class="container-fluid">
