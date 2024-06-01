@@ -1,3 +1,7 @@
+window.onerror = function (){
+  return true
+};
+
 let errors = [];
 const requiredFieldsIsEmpty = (requiredFields) =>!Object.values(requiredFields).every((value) => value);
 const instructionsDiv = document.querySelector("#instructions");
