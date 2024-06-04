@@ -1,6 +1,8 @@
-window.onerror = function (){
-  return true
-};
+
+const calendarOptions = Object.freeze({
+  viewOptions: "today,month,listWeek,listMonth",
+  navButtons: "prev,next"
+});
 
 let errors = [];
 const requiredFieldsIsEmpty = (requiredFields) =>!Object.values(requiredFields).every((value) => value);
@@ -10,7 +12,6 @@ const updateClassForm = document.querySelector("#updateClassForm");
 const customTooltip = ".custom-tooltip";
 const modal = (id) => bootstrap.Modal.getInstance(document.getElementById(id));
 const titleCase = (str) => str.toLowerCase().split(" ").map((word) => word.replace(word[0], word[0].toUpperCase())).join(" ");
-
 function removeBootstrapValidation() {
   let removeValidation = document.getElementsByClassName("needs-validation");
   for (let i = 0; i < removeValidation.length; i++) {
@@ -255,6 +256,7 @@ $(document).ready(function () {
   // Academic and personal Calendars
   // Academic
   function constructAcademicCalender() {
+
     async function getEventDetails(event) {
       try {
         const response = await fetch(
@@ -395,6 +397,28 @@ $(document).ready(function () {
       }
     }
 
+
+
+
+    //
+    $.ajax({
+
+      type: "POST",
+      url: "students_classes_details.inc.php",
+      data: {
+        personal_event_id: $("#personal_calendar_id").attr("value"),
+      },
+      success: function (response) {
+        // let data =  response.filter((i) => i.isCoursework == false);
+        let data = JSON.parse(response);
+        let d = data.filter(i=> Boolean(i['isCoursework']) == true)
+        console.log(d)
+
+
+      },
+      error: (xhr) => console.error(xhr.responseText),
+    }); // ajax
+
     academicCalendar = $("#academic_calendar").fullCalendar({
       events: "students_classes_details.inc.php",
       // properties
@@ -408,9 +432,9 @@ $(document).ready(function () {
       allDaySlot: false,
 
       header: {
-        left: "prev,next",
+        left: calendarOptions.navButtons,
         center: "title",
-        right: "today,month,listWeek,listMonth",
+        right: calendarOptions.viewOptions,
       },
       views: {
         listDay: {
@@ -604,10 +628,10 @@ $(document).ready(function () {
 
       plugins: ["interaction", "dayGrid", "timeGrid", "list"],
       header: {
-        left: "prev,next",
+        left: calendarOptions.navButtons,
         center: "title",
         //right: 'month,agendaWeek,agendaDay,listDay,listWeek,listMonth',
-        right: "today,month,listWeek,listMonth",
+        right: calendarOptions.viewOptions,
       },
       views: {
         listDay: {
@@ -834,14 +858,19 @@ $(document).ready(function () {
     }
     // update end date for personal calendar event
     function updateEvent(event) {
-      const start = event.start.format("YYYY-MM-DD HH:mm:ss");
+      let start = event.start.format("YYYY-MM-DD HH:mm:ss");
       event.end ? end = event.end.format("YYYY-MM-DD HH:mm:ss") : end = start;
+
       const personalEventDetails = Object.freeze({
         start: start,
         end: end,
         personal_calendar_id: event.id,
       });
       let personalEventDetailsStr = JSON.stringify(personalEventDetails);
+      const  url = "editEventDate.inc.php";
+
+
+
 
       const xhr = new XMLHttpRequest();
       xhr.open("POST", "editEventDate.inc.php", true);
@@ -869,6 +898,9 @@ $(document).ready(function () {
       };
       xhr.send(`personalEventDetails=${personalEventDetailsStr}`);
     }
+
+
+
   }
 
   $(".btnCloseModal").click(function (e) {
@@ -945,11 +977,8 @@ $(document).ready(function () {
   const calendarType = document.querySelector("#calender_type");
 
   if (calendarType) {
-    if (calendarType.value === "academic_calendar") {
-      createCalendarUI("academic calendar", "academic_calendar");
-    } else {
-      createCalendarUI("personal calendar", "personal_calendar");
-    }
+    calendarType.value === "academic_calendar" ? createCalendarUI("academic calendar", "academic_calendar") : createCalendarUI("personal calendar", "personal_calendar")
+
     calendarType.addEventListener("change", (e) =>
       createCalendarUI(e.target.value.replace("_", " "), e.target.value)
     );

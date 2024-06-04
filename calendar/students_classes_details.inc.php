@@ -33,7 +33,7 @@ foreach ($db->getCoursework() as $coursework) {
         'due' => Helper::formatDueDate($coursework['due_date']),
         'start' => $coursework['due_date'],
         'end' => $coursework['due_date'],
-        'color' => Helper::getCWColour()
+        'color' => Helper::getCourseworkColour()
     ];
 }
 

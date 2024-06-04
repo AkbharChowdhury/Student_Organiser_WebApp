@@ -304,7 +304,7 @@ final class Helper
     }
 
     // Default coursework colour for academic calendar
-    public static function getCWColour()
+    public static function getCourseworkColour()
     {
         return 'red';
     }
