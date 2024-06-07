@@ -20,6 +20,14 @@ class Mail {
         $this->emailTo = $emailTo;
         return $this;
     }
+    public function createHeaders($from): string
+    {
+        $headers = "From: $from\r\n";
+        $headers .= "MIME-Version: 1.0\r\n";
+        $headers .= "Content-Type: text/html; charset=ISO-8859-1\r\n";
+        return $headers;
+
+    }
     public function setSubject($subject) {
         $this->subject = $subject;
         return $this;

@@ -1,6 +1,11 @@
 <?php
 declare(strict_types=1);
 
+
+ini_set('display_errors', '1');
+ini_set('display_startup_errors', '1');
+error_reporting(E_ALL);
+
 session_start();
 define('LOGO', 'fas fa-book-reader');
 define('CURRENT_FILE', htmlspecialchars($_SERVER['PHP_SELF']));
