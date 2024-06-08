@@ -2,7 +2,7 @@
 <?php if ($db->getUpcomingCourseworkByMonth()) : ?>
     <div class="col-md-10">
         <div class="progress mt-3">
-            <div class="progress-bar <?= $progress_bar_class ?>" role="progressbar"
+            <div class="progress-bar bg-<?= $cwProgressData['class'] ?>" role="progressbar"
                  style="width: <?= $percentageCompleted ?>%;"
                  aria-valuenow="<?= $percentageCompleted ?>" aria-valuemin="0"
                  aria-valuemax="100">

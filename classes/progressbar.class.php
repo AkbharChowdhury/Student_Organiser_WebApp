@@ -3,7 +3,16 @@
 class ProgressBar
 {
 
-    public static function getProgressData(): array
+    public  static function getPercentageData($percentageCompleted)
+    {
+        $progressBarData = ProgressBar::getProgressData();
+        if ($percentageCompleted == 100) return $progressBarData['complete'];
+        else if ($percentageCompleted >= 50) return $progressBarData['in_progress'];
+        else return $progressBarData['incomplete'];
+
+    }
+
+    private static function getProgressData(): array
     {
         $width = 40;
         $height = 40;
@@ -67,11 +76,7 @@ class ProgressBar
 
     }
 
-    public function courseworkIsEmpty()
-    {
-        return empty($this->db->getUpcomingCourseworkByMonth());
 
-    }
 
 
 }
