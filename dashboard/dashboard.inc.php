@@ -64,8 +64,6 @@ $progress = new ProgressBar($db);
 $percentageCompleted=0;
 $progress_bar_class = '';
 $cwProgressData = ['icon' => '', 'text' => ''];
-$icons = ProgressBar::getIcons();
-$messages = ProgressBar::messages();
 if ($db->getUpcomingCourseworkByMonth()) {
 
     if ($db->getCourseworkStatusByMonth()) {
@@ -81,25 +79,24 @@ if ($db->getUpcomingCourseworkByMonth()) {
                 'percentage_not_completed' => round((intval($cwStatus["total_not_completed"]) / $totalCW) * 100)
             ];
             $percentageCompleted = ProgressBar::calcPercentageCompleted($cwProgress['total_completed'], $totalCW);
-
+            $progressBarData = ProgressBar::getProgressData();
 
             if ($percentageCompleted == 100) {
 
-                $progress_bar_class = 'bg-success';
-                $cwProgressData['text'] = $messages['complete'];
-                $cwProgressData['icon'] = $icons['complete'];
+                $progress_bar_class = 'bg-'.$progressBarData['complete']['class'];
+                $cwProgressData = $progressBarData['complete'];
 
             } else if ($percentageCompleted >= 50) {
 
-                $progress_bar_class = 'bg-warning';
-                $cwProgressData['text'] = $messages['in_progress'];
-                $cwProgressData['icon'] = $icons['in_progress'];
+
+                $progress_bar_class = 'bg-'.$progressBarData['in_progress']['class'];
+                $cwProgressData = $progressBarData['in_progress'];
 
             } else {
 
-                $progress_bar_class = 'bg-danger';
-                $cwProgressData['icon'] = $icons['incomplete'];
-                $cwProgressData['text'] = $messages['incomplete'];
+                $progress_bar_class = 'bg-'.$progressBarData['incomplete']['class'];
+                $cwProgressData = $progressBarData['incomplete'];
+
             }
 
 
