@@ -60,13 +60,13 @@ if ($db->getUpcomingCourseworkByMonth()) {
             $totalCW = intval($cwStatus["total_number_of_coursework"]);
             $cwProgress = [
                 'total_completed' => intval($cwStatus["total_completed"]),
-                'total_in_progress' => $cwStatus["total_in_progress"],
-                'total_not_completed' => $cwStatus["total_not_completed"],
-                'percentage_completed' => round((intval($cwStatus["total_completed"]) / $totalCW) * 100),
-                'percentage_in_progress' => round((intval($cwStatus["total_in_progress"]) / $totalCW) * 100),
-                'percentage_not_completed' => round((intval($cwStatus["total_not_completed"]) / $totalCW) * 100)
+                'total_in_progress' => intval($cwStatus["total_in_progress"]),
+                'total_not_completed' => intval($cwStatus["total_not_completed"]),
+                'percentage_completed' => ProgressBar::calcPercentage($cwStatus["total_completed"], $totalCW),
+                'percentage_in_progress' => ProgressBar::calcPercentage($cwStatus["total_in_progress"], $totalCW),
+                'percentage_not_completed' => ProgressBar::calcPercentage($cwStatus["total_not_completed"], $totalCW)
             ];
-            $percentageCompleted = ProgressBar::calcPercentageCompleted($cwProgress['total_completed'], $totalCW);
+            $percentageCompleted = ProgressBar::calcPercentage($cwProgress['total_completed'], $totalCW);
             $cwProgressData = ProgressBar::getPercentageData($percentageCompleted);
         }
     }

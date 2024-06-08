@@ -3,12 +3,12 @@
 class ProgressBar
 {
 
-    public  static function getPercentageData($percentageCompleted)
+    public static function getPercentageData($percentageCompleted): array
     {
         $progressBarData = ProgressBar::getProgressData();
         if ($percentageCompleted == 100) return $progressBarData['complete'];
-        else if ($percentageCompleted >= 50) return $progressBarData['in_progress'];
-        else return $progressBarData['incomplete'];
+        if ($percentageCompleted >= 50) return $progressBarData['in_progress'];
+        return $progressBarData['incomplete'];
 
     }
 
@@ -61,7 +61,7 @@ class ProgressBar
     }
 
 
-    public static function calcPercentageCompleted($num, $total)
+    public static function calcPercentage($num, $total)
     {
         return round(($num / $total) * 100);
 
@@ -75,8 +75,6 @@ class ProgressBar
 
 
     }
-
-
 
 
 }
