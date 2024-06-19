@@ -1,13 +1,16 @@
 <?php
 
 
-class Mail {
+class Mail
+{
     private static $instance = null;
 
-    private function __construct() {
+    private function __construct()
+    {
     }
 
-    public static function getInstance() {
+    public static function getInstance()
+    {
         return self::$instance === null ? self::$instance = new Mail() : self::$instance;
     }
 
@@ -16,10 +19,12 @@ class Mail {
     private $headers;
     private $message;
 
-    public function setEmailTo($emailTo) {
+    public function setEmailTo($emailTo)
+    {
         $this->emailTo = $emailTo;
         return $this;
     }
+
     public function createHeaders($from): string
     {
         $headers = "From: $from\r\n";
@@ -28,15 +33,21 @@ class Mail {
         return $headers;
 
     }
-    public function setSubject($subject) {
+
+    public function setSubject($subject)
+    {
         $this->subject = $subject;
         return $this;
     }
-    public function setMessage($message) {
+
+    public function setMessage($message)
+    {
         $this->message = $message;
         return $this;
     }
-    public function setHeaders($headers) {
+
+    public function setHeaders($headers)
+    {
         $this->headers = $headers;
         return $this;
     }
@@ -45,21 +56,24 @@ class Mail {
     private const TEMPLATE_EMAIL_FILE = '../includes/coursework_email_reminders.inc.php';
 
 
-    public function getEmailTemplateFile() {
+    public function getEmailTemplateFile()
+    {
         return self::TEMPLATE_EMAIL_FILE;
     }
-    public function getAdminEmail() {
+
+    public function getAdminEmail()
+    {
         return self::ADMIN_EMAIL;
     }
 
-    public function sendEmail() {
+    public function sendEmail()
+    {
         $this->init();
         return mail($this->emailTo, $this->subject, $this->message, $this->headers);
     }
 
-    public function renderCourseworkEmailReminder($db) {
-        
-
+    public function renderCourseworkEmailReminder($db)
+    {
 
 
         $message = '<!doctype html>
@@ -171,11 +185,11 @@ class Mail {
         
         <body>';
         $message .= '<h1 class="text-danger text-center">You have ' . $db->countUpcomingCourseworkByMonth() . ' upcoming coursework this month (' . date('M Y') . ')</h1>';
-        
-        foreach ($db->getUpcomingCourseworkByMonth() as $row) { 
+
+        foreach ($db->getUpcomingCourseworkByMonth() as $row) {
 
             $message .= '<div class="card">
-                            '.(!empty($row["image"]) ? '<img src="' . $row["image"] . '" alt="coursework image" style="width:100%">': '').'
+                            ' . (!empty($row["image"]) ? '<img src="' . $row["image"] . '" alt="coursework image" style="width:100%">' : '') . '
              
                             <h1>' . $row["title"] . '</h1>
                             <p class="card-text"><small class="text-muted">Description:</small><br></p>
@@ -186,9 +200,9 @@ class Mail {
                             <span class="badge bg-' . $row["status_colour"] . '"> ' . $row["status_level"] . '</span>
                           </p>
 
-                          '.($row['status_level'] !== 'Completed' ? '<p class="card-text"><small class="text-muted">Priority:</small>
-                          <span> ' .  Helper::getPriorityMessage($row["priority_level"]) . '</span>
-                        </p>': '').'.
+                          ' . ($row['status_level'] !== 'Completed' ? '<p class="card-text"><small class="text-muted">Priority:</small>
+                          <span> ' . Helper::getPriorityMessage($row["priority_level"]) . '</span>
+                        </p>' : '') . '.
           </div>';
         }
 
@@ -198,18 +212,20 @@ class Mail {
     }
 
 
-    private static function showSMS($db){
-      
-      $message = 'You have ' . $db->countUpcomingCourseworkByMonth() . ' upcoming coursework this month (' . date('M Y') . ')'."%0a";
-      foreach ($db->getUpcomingCourseworkByMonth() as $row) { 
-        $message.= "{$row['title']} Due: ".date("dS M Y", strtotime($row["due_date"]))."%0a";
+    private static function showSMS($db)
+    {
 
-      }
-      return $message;
+        $message = 'You have ' . $db->countUpcomingCourseworkByMonth() . ' upcoming coursework this month (' . date('M Y') . ')' . "%0a";
+        foreach ($db->getUpcomingCourseworkByMonth() as $row) {
+            $message .= "{$row['title']} Due: " . date("dS M Y", strtotime($row["due_date"])) . "%0a";
+
+        }
+        return $message;
 
     }
 
-    public static function sendSMSReminder($db){
+    public static function sendSMSReminder($db)
+    {
 
         // Authorisation details.
         $username = 'akbhar1999@hotmail.com';
@@ -236,10 +252,38 @@ class Mail {
     }
 
 
-
     // init method provides default configuration values for mail
-    private static function init() {
+    private static function init()
+    {
         ini_set('SMTP', 'smtp.gre.ac.uk');
         ini_set('sendmail_from', self::ADMIN_EMAIL);
+    }
+
+
+    public static function sendReminder($db)
+    {
+        if(!isset($_SESSION['reminder'])) $_SESSION['reminder'] = 0;
+        $mail = Mail::getInstance();
+        $template_file = $mail->getEmailTemplateFile();
+        $from = $mail->getAdminEmail();
+        $subject = 'Coursework reminder';
+        $headers = $mail->createHeaders(LOGO_TEXT . " <$from>");
+
+        if ($_SESSION['reminder'] == 1) return;
+        $_SESSION['reminder'] += 1;
+        if ($db->communicationType('email')) {
+
+            // send email reminder
+            $mail->setEmailTo($_SESSION['email'])
+                ->setSubject($subject)
+                ->setMessage($mail->renderCourseworkEmailReminder($db))
+                ->setHeaders($headers);
+            $mail->sendEmail();
+        }
+
+        if ($db->communicationType('phone')) {
+            // send sms reminder
+        }
+
     }
 }
