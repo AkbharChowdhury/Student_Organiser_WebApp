@@ -3,7 +3,7 @@ if (isset($_GET['calendar']) && $_GET['calendar'] === 'personal') $calendarType 
 $current_page = 'calendar';
 $page_title = 'View academic and personal calendar';
 require_once '../templates/header.php';
-Breadcrumb::getInstanceRootDirectory('Calendar', 'calendar.php', null)->createBreadCrumb();
+Breadcrumb::getInstanceRootDirectory(currentPage: 'Calendar', menuLink: 'calendar.php', menuDescription: '')->createBreadCrumb();
 $db = Database::getInstance();
 ?>
 

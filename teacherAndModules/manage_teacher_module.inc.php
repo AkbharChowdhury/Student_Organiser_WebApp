@@ -1,5 +1,5 @@
 <?php
-Breadcrumb::getInstanceSubDirectory('Teachers And Modules', 'modulesAndTeachers.php', null, 'manage teacher and modules')->createBreadCrumb();
+Breadcrumb::getInstanceSubDirectory('Teachers And Modules', 'modulesAndTeachers.php', false, 'manage teacher and modules')->createBreadCrumb();
 $db = Database::getInstance();
 $selectedModuleTeachers = [];
 foreach ($db->getTeachersAndModuleList() as $row) $selectedModuleTeachers[] = [$row['module_id'], $row['teacher_id']];

@@ -1,5 +1,5 @@
 <?php
-Breadcrumb::getInstanceSubDirectory('Teacher And Modules', 'modulesAndTeachers.php', null, $page_title)->createBreadCrumb();
+Breadcrumb::getInstanceSubDirectory(currentPage: 'Teacher And Modules', menuLink: 'modulesAndTeachers.php', rootDirectory: null, menuDescription: $page_title)->createBreadCrumb();
 $db = Database::getInstance();
 
 if (isset($_GET['editModule'])) {
@@ -32,7 +32,7 @@ if (isset($_POST['update_module'])) {
         ->addData('module_code', $module_code)
         ->addData('module_name', $module_name)
         ->addData('module_id', $module_id);
-        if( $module_code !==$module_details['module_code']){
+        if($module_code !== $module_details['module_code']){
             if ($db->duplicateModule($module_code)) {
                 Helper::setErrorMessage($module_code . ' module code already exists! Please choose a unique module code!');
                 return;

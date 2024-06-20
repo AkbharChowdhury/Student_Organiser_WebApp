@@ -1,5 +1,5 @@
 <?php
-Breadcrumb::getInstanceSubDirectory('Coursework', 'coursework.php', null, 'edit coursework')->createBreadCrumb();
+Breadcrumb::getInstanceSubDirectory(currentPage: 'Coursework', menuLink: 'coursework.php', rootDirectory: false ,menuDescription: 'edit coursework')->createBreadCrumb();
 $db = Database::getInstance();
 
 if (isset($_GET['editCoursework'])) {

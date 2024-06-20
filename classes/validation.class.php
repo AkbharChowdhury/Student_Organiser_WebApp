@@ -1,57 +1,45 @@
 <?php
-final class Validation {
 
-    private $data;
-    private $additionalChecks = true;
-    private $errors = [];
+final class Validation
+{
 
-    /* private  $VALIDATION = [
-
-   
-
-        'isValidNumber' => function($str) { 
-            return substr($str, 0, 1) === "0";
-           },
-        
-           'name' => function($str) { 
-               return preg_match('/^[a-zA-Z]+$/', $str);
-           },
-        
-           'isValidEmail'=> function($str) { 
-               return filter_var($str, FILTER_VALIDATE_EMAIL);
-           },
-        
-           'is8Chars'=> function($str) { 
-               return strlen($str) < 8;
-           },
-        
-        
-        
-        ];*/
-    // Hold the class instance.
     private static $instance = null;
 
-    private function __construct($postData) {
-        $this->data = $postData;
+
+    private function __construct(
+        private readonly array $data,
+        private bool  $additionalChecks = true,
+        private array $errors = []
+    )
+    {
     }
 
 
-    public static function getInstance($postData) {
+    public
+    static function getInstance($postData)
+    {
 
         return self::$instance === null ? self::$instance = new Validation($postData) : self::$instance;
     }
 
-    // add error keys
-    private function addError($key, $val) {
+// add error keys
+    private
+    function addError($key, $val)
+    {
         $this->errors[$key] = $val;
     }
-    // for password field
-    public function setAdditionalChecks($value) {
+
+// for password field
+    public
+    function setAdditionalChecks($value)
+    {
         $this->additionalChecks = $value;
         return $this;
     }
 
-    public function validateForm() {
+    public
+    function validateForm()
+    {
 
         $this->firstName();
         $this->lastName();
@@ -79,10 +67,9 @@ final class Validation {
     }
 
 
-
-
-
-    public function validateCourseworkForm(){
+    public
+    function validateCourseworkForm()
+    {
         $this->title();
         $this->status();
         $this->priority();
@@ -93,20 +80,26 @@ final class Validation {
 
 
     }
-    // validateTeacherForm
+
+// validateTeacherForm
 
 
     /***************************** Validation methods ********************************************************** */
-    
 
-    public function dueDate() {
+
+    public
+    function dueDate()
+    {
         if (array_key_exists('due_date', $this->data)) {
             if (empty(trim($this->data['due_date']))) {
                 $this->addError('due_date', 'due date is required');
             }
         }
     }
-    public function title() {
+
+    public
+    function title()
+    {
         if (array_key_exists('title', $this->data)) {
             if (empty(trim($this->data['title']))) {
                 $this->addError('title', 'title is required');
@@ -114,21 +107,29 @@ final class Validation {
         }
     }
 
-    public function status() {
+    public
+    function status()
+    {
         if (array_key_exists('status_id', $this->data)) {
             if (empty(trim($this->data['status_id']))) {
                 $this->addError('status', 'status is required');
             }
         }
     }
-    public function priority() {
+
+    public
+    function priority()
+    {
         if (array_key_exists('priority_id', $this->data)) {
             if (empty(trim($this->data['priority_id']))) {
                 $this->addError('priority_id', 'priority_id is required');
             }
         }
     }
-    public function module() {
+
+    public
+    function module()
+    {
         if (array_key_exists('module_id', $this->data)) {
             if (empty(trim($this->data['module_id']))) {
                 $this->addError('module_id', 'module_id is required');
@@ -136,7 +137,9 @@ final class Validation {
         }
     }
 
-    public function activityType() {
+    public
+    function activityType()
+    {
         if (array_key_exists('activity_type', $this->data)) {
             $activityType = trim($this->data['activity_type']);
             if (empty($activityType)) {
@@ -145,7 +148,9 @@ final class Validation {
         }
     }
 
-    public function teacherList() {
+    public
+    function teacherList()
+    {
         if (array_key_exists('module_teacher', $this->data)) {
             $activityType = trim($this->data['module_teacher']);
             if (empty($activityType)) {
@@ -153,7 +158,10 @@ final class Validation {
             }
         }
     }
-    public function semesterStartDate() {
+
+    public
+    function semesterStartDate()
+    {
         if (array_key_exists('semester_start_date', $this->data)) {
             $semesterStartDate = trim($this->data['semester_start_date']);
             if (empty($semesterStartDate)) {
@@ -161,7 +169,10 @@ final class Validation {
             }
         }
     }
-    public function semesterEndDate() {
+
+    public
+    function semesterEndDate()
+    {
         if (array_key_exists('semester_end_date', $this->data)) {
             $semesterEndDate = trim($this->data['semester_end_date']);
             if (empty($semesterEndDate)) {
@@ -170,11 +181,10 @@ final class Validation {
         }
     }
 
-  
 
-    
-
-    public function termsContent() {
+    public
+    function termsContent()
+    {
         if (array_key_exists('content', $this->data)) {
             $moduleCode = trim($this->data['content']);
             if (empty($moduleCode)) {
@@ -182,7 +192,10 @@ final class Validation {
             }
         }
     }
-    public function moduleCode() {
+
+    public
+    function moduleCode()
+    {
         if (array_key_exists('module_code', $this->data)) {
             $moduleCode = trim($this->data['module_code']);
             if (empty($moduleCode)) {
@@ -191,7 +204,9 @@ final class Validation {
         }
     }
 
-    public function moduleName(){
+    public
+    function moduleName()
+    {
         if (array_key_exists('module_name', $this->data)) {
             $moduleName = trim($this->data['module_name']);
             if (empty($moduleName)) {
@@ -202,7 +217,10 @@ final class Validation {
 
         //
     }
-    public function campus() {
+
+    public
+    function campus()
+    {
         if (array_key_exists('campus', $this->data)) {
             $campus = trim($this->data['campus']);
             if (empty($campus)) {
@@ -211,7 +229,9 @@ final class Validation {
         }
     }
 
-    public function address() {
+    public
+    function address()
+    {
         if (array_key_exists('address', $this->data)) {
             $address = trim($this->data['address']);
             if (empty($address)) {
@@ -219,7 +239,10 @@ final class Validation {
             }
         }
     }
-    public function city() {
+
+    public
+    function city()
+    {
         if (array_key_exists('city', $this->data)) {
             $city = trim($this->data['city']);
             if (empty($city)) {
@@ -228,7 +251,9 @@ final class Validation {
         }
     }
 
-    public function postcode() {
+    public
+    function postcode()
+    {
         if (array_key_exists('postcode', $this->data)) {
             $postcode = trim($this->data['postcode']);
             if (empty($postcode)) {
@@ -236,7 +261,10 @@ final class Validation {
             }
         }
     }
-    public function phone() {
+
+    public
+    function phone()
+    {
         if (array_key_exists('phone', $this->data)) {
             // getting post values and validating them
             $phone = trim($this->data['phone']);
@@ -256,7 +284,8 @@ final class Validation {
     }
 
 
-    final protected function firstName() {
+    final protected function firstName()
+    {
         if (array_key_exists('firstname', $this->data)) {
             // getting post values and validating them
             $firstname = trim($this->data['firstname']);
@@ -272,7 +301,8 @@ final class Validation {
         }
     }
 
-    final protected function lastName() {
+    final protected function lastName()
+    {
         if (array_key_exists('lastname', $this->data)) {
             // getting post values and validating them
             $lastname = trim($this->data['lastname']);
@@ -288,7 +318,8 @@ final class Validation {
         }
     }
 
-    final protected function email() {
+    final protected function email()
+    {
         if (array_key_exists('email', $this->data)) {
             $email = trim($this->data['email']);
 
@@ -303,7 +334,8 @@ final class Validation {
         }
     }
 
-    final protected function password() {
+    final protected function password()
+    {
         if (array_key_exists('password', $this->data)) {
             $password = $this->data['password'];
             if (trim(empty($password))) {
@@ -320,7 +352,8 @@ final class Validation {
         }
     }
 
-    final protected function subject() {
+    final protected function subject()
+    {
         if (array_key_exists('subject', $this->data)) {
             $subject = $this->data['subject'];
             if (trim(empty($subject))) {
@@ -330,7 +363,8 @@ final class Validation {
     }
 
 
-    final protected function message() {
+    final protected function message()
+    {
 
         if (array_key_exists('message', $this->data)) {
             $message = $this->data['message'];
@@ -341,14 +375,8 @@ final class Validation {
     }
 
 
-
-
-
-
-
-
-
-    public function description() {
+    public function description()
+    {
 
         if (array_key_exists('description', $this->data)) {
             $description = trim($this->data['description']);
@@ -366,7 +394,8 @@ final class Validation {
     }
 
 
-    final protected function image() {
+    final protected function image()
+    {
         if (array_key_exists('image', $this->data)) {
             $image = trim($this->data['image']);
 
@@ -381,7 +410,8 @@ final class Validation {
         }
     }
 
-    public function username() {
+    public function username()
+    {
         if (array_key_exists('username', $this->data)) {
             $campus = trim($this->data['username']);
             if (empty($campus)) {

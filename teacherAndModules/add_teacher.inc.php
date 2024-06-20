@@ -1,7 +1,7 @@
 <?php
 $db = Database::getInstance();
 
-Breadcrumb::getInstanceSubDirectory('teachers and modules', 'modulesAndTeachers.php', null, 'Add teachers and modules')->createBreadCrumb();
+Breadcrumb::getInstanceSubDirectory('teachers and modules', 'modulesAndTeachers.php', false, 'Add teachers and modules')->createBreadCrumb();
 if (isset($_POST['addTeacher'])) {
 
     $validation = Validation::getInstance($_POST);

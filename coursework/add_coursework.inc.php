@@ -1,6 +1,6 @@
 <?php
 
-Breadcrumb::getInstanceSubDirectory($current_page, 'coursework.php', null, $page_title)->createBreadCrumb();
+Breadcrumb::getInstanceSubDirectory(currentPage:  $current_page, menuLink: 'coursework.php', rootDirectory: false,  menuDescription: $page_title)->createBreadCrumb();
 
 $db = Database::getInstance();
 
