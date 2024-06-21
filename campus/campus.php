@@ -2,7 +2,10 @@
 $current_page = 'campus';
 $page_title = 'View my Campuses';
 require_once '../templates/header.php';
-Breadcrumb::getInstanceRootDirectory('Campus', 'campus.php', null)->createBreadCrumb();
+
+
+$breadcrumb = new Breadcrumb();
+$breadcrumb->createBreadcrumb(url: 'campus.php',text: 'campus');
 $db = Database::getInstance();
 ?>
 <div class="container mt-3">

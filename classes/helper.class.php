@@ -11,6 +11,12 @@ final class Helper
     {
     }
 
+    public static function titleCase($title): string
+    {
+        return str_contains('_', $title) ? ucwords(str_replace(search: "_", replace: " ", subject: $title)) : ucwords($title);
+
+    }
+
     public static function rootDirectory($file)
     {
         return dirname($file) . '/../';

@@ -17,7 +17,7 @@ require_once 'edit_teacher.inc.php';
                 <div class="col-md-10">
                     <div class="card card-outline-secondary">
                         <div class="card-header">
-                            <h3 class="mb-0">Add Teacher</h3>
+                            <h3 class="mb-0">Edit Teacher</h3>
                         </div>
                         <div class="card-body">
                             <form action="" method="post" id="addTeacherForm" class="needs-validation" novalidate>

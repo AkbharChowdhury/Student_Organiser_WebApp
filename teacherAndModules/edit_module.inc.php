@@ -1,6 +1,8 @@
 <?php
-Breadcrumb::getInstanceSubDirectory(currentPage: 'Teacher And Modules', menuLink: 'modulesAndTeachers.php', rootDirectory: null, menuDescription: $page_title)->createBreadCrumb();
+$breadcrumb = new Breadcrumb('edit module');
+$breadcrumb->createBreadcrumb(url: 'modulesAndTeachers.php',text: 'Teacher And Modules');
 $db = Database::getInstance();
+
 
 if (isset($_GET['editModule'])) {
 

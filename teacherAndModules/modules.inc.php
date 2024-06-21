@@ -1,6 +1,6 @@
 <?php
-Breadcrumb::getInstanceRootDirectory('Teacher And Modules', 'modulesAndTeachers.php', null)->createBreadCrumb();
-
+$breadcrumb = new Breadcrumb();
+$breadcrumb->createBreadcrumb(url: 'modulesAndTeachers.php',text: 'Teacher And Modules');
 $db = Database::getInstance();
 if (isset($_GET['deleteModuleID'])) {
     if ($db->deleteModule(Helper::html($_GET['deleteModuleID']))) {

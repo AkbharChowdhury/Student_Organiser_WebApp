@@ -2,7 +2,9 @@
 $current_page = 'coursework';
 $page_title = 'View coursework';
 require_once '../templates/header.php';
-Breadcrumb::getInstanceRootDirectory('View coursework', 'coursework.php', null)->createBreadCrumb();
+$breadcrumb = new Breadcrumb();
+$breadcrumb->createBreadcrumb(url: 'coursework.php',text: 'coursework');
+
 $db = Database::getInstance();
 ?>
 <div class="container mt-3">

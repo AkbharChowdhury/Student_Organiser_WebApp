@@ -13,7 +13,10 @@
     ?>
 </noscript>
 <?php
-Breadcrumb::getInstanceSubDirectory($current_page, 'campus.php', null, 'add campus')->createBreadCrumb();
+
+
+$breadcrumb = new Breadcrumb(title: 'add campus');
+$breadcrumb->createBreadcrumb(url: 'campus.php',text: 'campus');
 $db = Database::getInstance();
 
 if (isset($_POST['add_campus'])) {
