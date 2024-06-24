@@ -1,4 +1,6 @@
 <?php
+
+
 $db = Database::getInstance();
 if ($db->getUpcomingCourseworkByMonth()) Mail::sendReminder($db);
 /******************************* items completed ************************** */
@@ -26,7 +28,7 @@ if (isset($_POST['btnSetCompletedPersonal'])) {
 
 
 /******************************* coursework progress bars ************************** */
-$progress = new ProgressBar($db);
+$progress = new ProgressBar;
 $percentageCompleted = 0;
 $cwProgressData = ['class' => '', 'icon' => '', 'text' => ''];
 if ($db->getUpcomingCourseworkByMonth() && $db->getCourseworkStatusByMonth()) {

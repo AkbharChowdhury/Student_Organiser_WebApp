@@ -3,10 +3,6 @@ date_default_timezone_set('Europe/London');
 
 final class Helper
 {
-    /* Notes
-     * self:: is used to access static methods and fields rather than using $this keyword as static classes cannot be instantiated. 
-     * in this class we only want to get methods without instantiating the class itself.
-     */
     private function __construct()
     {
     }
@@ -147,92 +143,56 @@ final class Helper
     public static function cwDateColour($deadline, $status)
     {
 
-        if ($status == 'Not completed') return 'danger';
-        if ($status == 'In progress') return 'warning';
-        return 'success';
+        return match ($status) {
+            'Not completed' => 'danger',
+            'In progress', => 'warning',
+            default => 'success'
+        };
+
+
 
     }
 
     public static function showStatusColour($status)
     {
-        switch ($status) {
-            case 'Completed';
-                return 'success';
-            case 'in_progress';
-            case 'In progress';
 
-                return 'warning';
-            case 'Not Completed';
-            case 'Not completed';
-                return 'danger';
-        }
+        return match ($status) {
+            'Completed' => 'success',
+            'in_progress', 'In progress' => 'warning',
+            default => 'danger'
+        };
+
     }
 
-    public static function getStatusColours($status)
-    {
-        global $returnStatus;
-
-        switch ($status) {
-            case 'completed':
-                $returnStatus['icon'] = 'bi-emoji-smile';
-                $returnStatus['text'] =
-                    '<p class="text-success"><strong>Hurray, you have completed all your coursework</strong> <br>
-                Tip:try proofreading your coursework
-            </p>';
-
-                break;
-
-            case 'in_progress':
-                $returnStatus['icon'] = 'bi-emoji-neutral';
-                $returnStatus['text'] = '<p class="text-warning"><strong>you are making steady progress. Keep going!</strong></p>';
-                break;
-
-            case 'not_completed':
-                $returnStatus['icon'] = 'bi-emoji-frown';
-                $returnStatus['text'] = '<p class="text-danger"><strong>you are not on track. Please attempt your coursework</strong></p>';
-
-                break;
-        }
-    }
 
     public static function getPriorityMessage($priorityLevel)
     {
 
 
-        switch (strtolower($priorityLevel)) {
-
-            case 'high':
-
-                return '<div class="alert alert-danger d-flex align-items-center" role="alert">
+        return match (strtolower($priorityLevel)) {
+            'high' => '<div class="alert alert-danger d-flex align-items-center" role="alert">
             <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Danger:"><use xlink:href="#exclamation-triangle-fill"/></svg>
             <div>
               This task requires urgent attention! 
             </div>
           </div>
-          ';
-
-            case 'medium':
-                return '<div class="alert alert-warning d-flex align-items-center" role="alert">
+          ',
+            'medium' => '<div class="alert alert-warning d-flex align-items-center" role="alert">
             <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Warning:"><use xlink:href="#info-fill"/></svg>
             <div>
               Please check if you are on progress! 
             </div>
           </div>
-          ';
-
-
-            case 'low':
-                return '<div class="alert alert-success d-flex align-items-center" role="alert">
+          ',
+            'low' => '<div class="alert alert-success d-flex align-items-center" role="alert">
             <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Success:"><use xlink:href="#check-circle-fill"/></svg>
             <div>
               This task requires low attention
             </div>
           </div>
-          ';
-
-            default:
-                return '';
-        }
+          ',
+            default => '',
+        };
     }
 
     public static function overDueCW($due)
@@ -247,8 +207,8 @@ final class Helper
         $current = strtotime(date("Y-m-d"));
         $date = strtotime($deadline);
 
-        $datediff = $date - $current;
-        $difference = floor($datediff / (60 * 60 * 24));
+        $dateDiff = $date - $current;
+        $difference = floor($dateDiff / (60 * 60 * 24));
         if ($difference == 0) return 'today';
         if ($difference == 1) return 'tomorrow';
         if ($difference < -1) return 'Overdue';
@@ -336,7 +296,7 @@ final class Helper
     }
 
 
-    public static function disableSubmit()
+    public static function disableSubmit(): bool
     {
         return self::$disableSubmitBtn;
     }
@@ -349,66 +309,17 @@ final class Helper
         }
     }
 
-    public static function getMonth($month)
+    public static function getMonth($monthName)
     {
+        $monthNumber = date_parse($monthName)['month'];
+        return strlen($monthNumber) == 1 ? '0' . $monthNumber : $monthNumber;
 
-        switch ($month) {
-            case 'January':
-                return '01';
-            case 'February':
-                return '02';
-            case 'March':
-                return '03';
-            case 'April':
-                return '04';
-            case 'May':
-                return '05';
-            case 'June':
-                return '06';
-            case 'July':
-                return '07';
-            case 'August':
-                return '08';
-            case 'September':
-                return '09';
-            case 'October':
-                return '10';
-            case 'November':
-                return '11';
-            case 'December':
-                return '12';
-        }
     }
 
     public static function getLastDayOfMonth($month)
     {
+        return date_parse($month)['month'];
 
-        switch ($month) {
-            case 'January':
-                return 1;
-            case 'February':
-                return 2;
-            case 'March':
-                return 3;
-            case 'April':
-                return 4;
-            case 'May':
-                return 5;
-            case 'June':
-                return 6;
-            case 'July':
-                return 7;
-            case 'August':
-                return 8;
-            case 'September':
-                return 9;
-            case 'October':
-                return 10;
-            case 'November':
-                return 11;
-            case 'December':
-                return 12;
-        }
     }
 
     // Prevent the student editing others modules by redirecting
@@ -462,7 +373,6 @@ final class Helper
     { ?>
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
-                <!-- Go back to the previous page and show previous search results -->
                 <li class="breadcrumb-item"><a href="<?= $homeLink ?>">Home</a></li>
                 <li class="breadcrumb-item text-capitalize active" aria-current="page"><?= $page; ?></li>
             </ol>
