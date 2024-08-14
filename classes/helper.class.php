@@ -263,7 +263,7 @@ final class Helper
         $_SESSION['msg_icon'] = 'exclamation-triangle-fill';
     }
 
-    public static function setRoleErrorMessage($message)
+    public static function setRoleErrorMessage($message): string
     {
 
         return 'Only ' . $message . ' can access this page!';
